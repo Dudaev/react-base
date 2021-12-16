@@ -1,12 +1,10 @@
 import React from "react";
-import Counter from "./components/Counter.jsx";
-import ClassCounter from "./components/ClassCounter.jsx";
-
+import PostItem from "./components/PostItem.jsx";
+import "./styles/App.css";
 function App() {
   return (
     <div className="App">
-      <Counter />
-      <ClassCounter />
+      <PostItem />
     </div>
   );
 }
