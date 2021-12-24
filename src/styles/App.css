@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.postsPage {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.postItem {
+  display: flex;
+  border: 2px solid green;
+  padding: 15px;
+  border-radius: 25px;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.postList__title {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.postItem__btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.postIdPage {
+  width: 800px;
+  margin: 0 auto;
+}
