@@ -7,7 +7,11 @@ function AppRouter() {
     <>
       <Routes>
         {routers.map((route) => (
-          <Route path={route.path} element={route.element}></Route>
+          <Route
+            path={route.path}
+            element={route.element}
+            key={route.path}
+          ></Route>
         ))}
         <Route path="*" element={<Navigate to="/posts" />} />
       </Routes>
