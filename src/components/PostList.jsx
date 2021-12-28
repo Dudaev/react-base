@@ -1,10 +1,10 @@
 import React from "react";
 import PostItem from "./PostItem";
 
-function PostList({ posts, removePost }) {
+function PostList({ posts, removePost, title }) {
   return (
     <div>
-      <h2 className="postList__title">Посты про JS</h2>
+      <h2 className="postList__title">{title}</h2>
       {posts.map((post) => (
         <PostItem post={post} key={post.id} remove={removePost} />
       ))}
