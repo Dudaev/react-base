@@ -15,7 +15,9 @@ function PostFilter({ filter, setFilter }) {
       />
       <MySelect
         value={filter.sort}
-        onChange={(event) => setFilter({ ...filter, sort: event.target.value })}
+        onChange={(selectedSort) =>
+          setFilter({ ...filter, sort: selectedSort })
+        }
         defaultValue={"Сортировка"}
         options={[
           { name: "По описанию", value: "body" },

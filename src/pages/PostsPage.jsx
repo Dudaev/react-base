@@ -7,6 +7,8 @@ import MyModal from "../components/UI/MyModal/MyModal";
 import MySelect from "../components/UI/MySelect/MySelect";
 import { useFetching } from "../hooks/useFetching";
 import PostService from "../API/PostService";
+import usePosts from "../hooks/usePosts";
+import Pagination from "../components/Pagination";
 
 function PostsPage() {
   const [posts, setPosts] = useState([]);
@@ -15,7 +17,7 @@ function PostsPage() {
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
-
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
   function addPost(post) {
     setPosts([...posts, post]);
     setMyModal(false);
@@ -25,7 +27,7 @@ function PostsPage() {
     setPosts(posts.filter((post) => post.id !== postId));
   }
 
-  const [fetchPosts, isPostsLoading, postError] = useFetching(
+  const [fetchPosts, postError, isPostsLoading] = useFetching(
     async (limit, page) => {
       const response = await PostService.getAll(limit, page);
       setPosts([...posts, ...response.data]);
@@ -53,11 +55,21 @@ function PostsPage() {
         onChange={setLimit}
         defaultValue={"Кол-во элементов на странице"}
       />
+      {isPostsLoading && <h1>ЗАГРУЗКА</h1>}
       {postError && <h1>Произошла ошибка ${postError}</h1>}
-      <PostList posts={posts} removePost={removePost} title="Посты про JS" />
+      <PostList
+        posts={sortedAndSearchedPosts}
+        remove={removePost}
+        title="Посты про JS"
+      />
       <MyModal visible={myModal} setVisible={setMyModal}>
         <PostForm addPost={addPost} />
       </MyModal>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={page}
+        setPage={setPage}
+      />
     </div>
   );
 }
