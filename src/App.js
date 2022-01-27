@@ -1,11 +1,13 @@
 import React from "react";
-import PostItem from "./components/PostItem.jsx";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./components/AppRouter";
 import "./styles/App.css";
+
 function App() {
   return (
-    <div className="App">
-      <PostItem />
-    </div>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

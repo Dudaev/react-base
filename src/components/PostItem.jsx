@@ -1,23 +1,29 @@
 import React from "react";
-import Button from "./UI/Button/Button";
-const PostItem = function () {
-  return (
-    <div className="post">
-      <div>
-        <p>1. sunt aut facere repellat provident occaecati excepturi optio</p>
-        <p>
-          reprehenderit quia et suscipit suscipit recusandae consequuntur
-          expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum
-          est autem sunt rem eveniet architecto
-        </p>
-      </div>
+import { useNavigate } from "react-router-dom";
+import MyButton from "./UI/MyButton/MyButton";
 
-      <div className="post__btns">
-        <Button onClick={() => console.log("Открыть")}>Открыть</Button>
-        <Button onClick={() => console.log("Закрыть")}>Закрыть</Button>
+function PostItem({ post, remove }) {
+  const navigate = useNavigate();
+
+  return (
+    <div className="postItem">
+      <div>
+        <strong>
+          <p>
+            {post.id}. {post.title}
+          </p>
+        </strong>
+
+        <p>{post.body}</p>
+      </div>
+      <div className="postItem__btns">
+        <MyButton onClick={() => navigate(`/posts/${post.id}`)}>
+          Открыть
+        </MyButton>
+        <MyButton onClick={() => remove(post.id)}>Удалить</MyButton>
       </div>
     </div>
   );
-};
+}
 
 export default PostItem;
