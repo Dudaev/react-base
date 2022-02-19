@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PostFilter from "../components/PostFilter";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
@@ -9,6 +9,7 @@ import { useFetching } from "../hooks/useFetching";
 import PostService from "../API/PostService";
 import usePosts from "../hooks/usePosts";
 import Pagination from "../components/Pagination";
+import { useObserver } from "../hooks/useObserver";
 
 function PostsPage() {
   const [posts, setPosts] = useState([]);
@@ -18,6 +19,9 @@ function PostsPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const lastElement = useRef();
+  // const observer = useRef();
+
   function addPost(post) {
     setPosts([...posts, post]);
     setMyModal(false);
@@ -39,6 +43,10 @@ function PostsPage() {
   useEffect(() => {
     fetchPosts(limit, page);
   }, [page, limit]);
+
+  useObserver(lastElement, page < totalPages, isPostsLoading, () =>
+    setPage(page + 1)
+  );
 
   return (
     <div className="postsPage">
@@ -62,6 +70,7 @@ function PostsPage() {
         remove={removePost}
         title="Посты про JS"
       />
+      <div ref={lastElement} className="last"></div>
       <MyModal visible={myModal} setVisible={setMyModal}>
         <PostForm addPost={addPost} />
       </MyModal>
